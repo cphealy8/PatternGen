@@ -1,3 +1,3 @@
 PPName = 'Random Homogenous'; % metadata
-npts=10;
+npts=50;
 pts = PoissonPP(win,npts);
