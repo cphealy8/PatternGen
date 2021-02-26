@@ -11,6 +11,7 @@ addOptional(p,'signal',[],@isnumeric)
 addOptional(p,'windowsize',[],@isnumeric)
 addOptional(p,'MarkerSize',5, @isnumeric)
 addOptional(p,'FontSize',10,@isnumeric)
+addOptional(p,'DisplayAxes',true,@islogical)
 
 parse(p,pts,varargin{:});
 
@@ -19,6 +20,7 @@ signal = p.Results.signal;
 windowsize = p.Results.windowsize;
 MarkerSize = p.Results.MarkerSize;
 FontSize = p.Results.FontSize;
+DisplayAxes = p.Results.DisplayAxes;
 
 %% Check inputs
 pts=fixOrientation(pts);
@@ -75,11 +77,20 @@ elseif ~isempty(signal)
 else
     plot(xcoords,ycoords,'or','MarkerFaceColor','r','MarkerSize',MarkerSize);
 end
+
+
+
 axis equal
 axis(windowsize)
 plotAxes = gca;
 set(plotAxes,'FontSize',FontSize)
 
+if ~DisplayAxes
+    set(plotAxes,'YTickLabel',[])
+    set(plotAxes,'XTickLabel',[])
+    set(plotAxes,'ytick',[])
+    set(plotAxes,'xtick',[])
+end
 end
 
 

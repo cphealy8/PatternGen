@@ -1,6 +1,5 @@
 %PATTERNSIMULATE Simulate point patterns and compute relevant statistics.
 clc; clear; close all;
-ptfnames = dir('Patterns');
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\Patterns';
 addpath('Patterns');
@@ -10,19 +9,12 @@ r = linspace(0,0.5,101);
 r(1) = [];
 quadratBins = 4;
 
-
-%% find point files
+%% Get point Files
 ncnt = 0; % counter
 TotTime = 0; % Total time
 
-% Total point files
-isPP = zeros(1,length(ptfnames));
-for n = 1:length(ptfnames)
-    if contains(ptfnames(n).name,'PP')
-        isPP(n) = 1;
-    end
-end
-ptfnames = ptfnames(logical(isPP'));
+ptfnames = getFileNames('Patterns','PP');
+
 nPP = length(ptfnames);
 
 totalSims = nPP*msims;
@@ -34,7 +26,7 @@ for n = 1:nPP
 win = [0 1 0 1];
 npts = 100;
 
-ptfilename = ptfnames(n).name;
+ptfilename = ptfnames{n};
 for m = 1:msims
     ncnt = ncnt+1;
     tic

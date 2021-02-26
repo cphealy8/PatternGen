@@ -16,8 +16,8 @@ if contains(ptfilename,'PP')
     run(ptfilename);
     
     % Plot Point Process
-    FH = figure;
-    plotPattern(pts,'WindowSize',win);
+    FH = figure('Units','centimeters','Position',[5 5 4.5 4.5]);
+    plotPattern(pts,'WindowSize',win,'DisplayAxes',false,'MarkerSize',3);
     title(ptfilename,'Interpreter','none')
     
     RootName = ptfilename(1:end-2);
@@ -25,5 +25,5 @@ if contains(ptfilename,'PP')
     saveas(FH,ResultName,'pdf')
     close all
 end
-
+    
 end
