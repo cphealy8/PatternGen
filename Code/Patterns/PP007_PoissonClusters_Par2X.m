@@ -1,6 +1,4 @@
-PPName = 'Aggregated - Small Clusters - Homogenous'; % metadata
-
-ParentNum = round(npts/20);
+ParentNum = round(npts/5);
 ptsperclust = round(npts/ParentNum);
 ChildNumMean = ptsperclust-1;
 ChildNumSD = ptsperclust/10;
