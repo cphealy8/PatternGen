@@ -42,6 +42,7 @@ for m = 1:msims
     % Compute ChiSquare Homogeneity Test
     [ChiSqPVal(m),ChiSq(m),ChiSqDF(m)] = ChiSq_HomogeneityTest(pts,win,quadratBins);
     
+    
     % Timing and progress bar updates
     tsim(ncnt) = toc;
     TimePerSim = mean(tsim);
@@ -50,8 +51,13 @@ for m = 1:msims
     percComplete = ncnt/totalSims;
     waitbar(percComplete,f,sprintf('Pattern: %d/%d Simulation: %d/%d\nETR:%d min',n,nPP,m,msims,round(TimeRem/60)));
 end
+%pooled stats
+ChiSqPool = sum(ChiSq);
+ChiSqDFPool = sum(ChiSqDF);
+ChiSqPValPool = 1-chi2cdf(ChiSqPool,ChiSqDFPool);
+
 % Save the data;
 savename = fullfile(DataDir,strcat(ptfilename(1:end-2),'.mat'));
-save(savename,'r','LmR','msims','quadratBins','pts','numpts','ChiSqPVal','ChiSq','ChiSqDF','win')
+save(savename,'r','LmR','msims','quadratBins','pts','numpts','ChiSqPVal','ChiSq','ChiSqDF','win','ChiSqPool','ChiSqDFPool','ChiSqPValPool')
 end
 close(f)
