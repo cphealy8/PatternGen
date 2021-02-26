@@ -1,7 +1,6 @@
-npts = npts/2;
-
-ParentNum = round(npts/5);
-ptsperclust = round(npts/ParentNum);
+tempnpts = npts/2;
+ParentNum = round(tempnpts/5);
+ptsperclust = round(tempnpts/ParentNum);
 ChildNumMean = ptsperclust-1;
 ChildNumSD = ptsperclust/10;
 
@@ -12,8 +11,8 @@ ROpns = [0 radius];
 
 pts1 = PoissonClusts(win,ParentNum,ChildNumOpns,ROpns,'ChildNumProbs','normal');
 
-ParentNum = round(npts/5);
-ptsperclust = round(npts/ParentNum);
+ParentNum = round(tempnpts/5);
+ptsperclust = round(tempnpts/ParentNum);
 ChildNumMean = ptsperclust-1;
 ChildNumSD = ptsperclust/10;
 
