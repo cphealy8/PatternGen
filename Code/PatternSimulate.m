@@ -22,7 +22,7 @@ tsim = zeros(1,totalSims);
 
 %% simulations
 f = waitbar(0,'Simulating...');
-for n = 1:nPP
+for n = 20
 win = [0 1 0 1];
 npts = 100;
 

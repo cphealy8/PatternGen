@@ -24,6 +24,18 @@ if contains(ptfilename,'PP')
     ResultName = fullfile(ResultDir,RootName);
     saveas(FH,ResultName,'pdf')
     close all
+elseif contains(ptfilename,'PAB')
+    
+    run(ptfilename);
+    FH = figure('Units','centimeters','Position',[5 5 4.5 4.5]);
+    plotPattern(ptsA,'PtsB',ptsB,'WindowSize',win,'DisplayAxes',false,'MarkerSize',3);
+    title(ptfilename,'Interpreter','none')
+    
+    RootName = ptfilename(1:end-2);
+    ResultName = fullfile(ResultDir,RootName);
+    saveas(FH,ResultName,'pdf')
+    close all
 end
+
     
 end

@@ -50,8 +50,9 @@ filenames = getFileNames(DataDir,'PP');
 % fileIDs = 1:3; % Poisson Processes
 % fileIDs = [4:8]; % PoissonClusters
 % fileIDs = [4 9 10 20]; % Poisson Clusters Other
-% fileIDs = [11:15]; % Metner Regularity
-fileIDs = [16:19]; % Mixed
+fileIDs = [11:14]; % Metner Regularity
+% fileIDs = [16:19]; % Mixed
+
 
 colors = {'#000000','#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
 
