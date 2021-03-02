@@ -36,6 +36,4 @@ elseif contains(ptfilename,'PAB')
     saveas(FH,ResultName,'pdf')
     close all
 end
-
-    
 end

@@ -64,6 +64,11 @@ filenames = getFileNames(DataDir,patternType);
 % fileIDs = [11:14]; % Metner Regularity
 % fileIDs = [16:19]; % Mixed
 
+% FOR BIVARIATE PLOTS
+% fileIDs = [1:2]; % Independent
+% fileIDs = [3:6]; % Positive Association
+fileIDs = [7:10]; % Negative Association
+
 
 colors = {'#000000','#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
 
