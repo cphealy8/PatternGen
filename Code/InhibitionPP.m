@@ -23,6 +23,8 @@ addRequired(p,'PkgDens',@isnumeric);
 addRequired(p,'InhDist',@isnumeric);
 addParameter(p,'IntensityMap',[],@isnumeric);
 addParameter(p,'MaxReps',20,@isnumeric);
+addParameter(p,'NoiseType',[],@ischar);
+addParameter(p,'NoiseSpecs',[],@isnumeric);
 
 parse(p,Win,PkgDens,InhDist,varargin{:})
 
@@ -32,6 +34,8 @@ Area = WinWidth*WinHeight;
 
 MaxReps = p.Results.MaxReps;
 IntensityMap = p.Results.IntensityMap;
+NoiseType = p.Results.NoiseType;
+NoiseSpecs = p.Results.NoiseSpecs;
 
 %% Generate poisson process
 maxPkgDens = 0.547;
@@ -89,9 +93,19 @@ end
 
 newpts = [rangeRand([maxN 1],Win(1),Win(2)) rangeRand([maxN 1],Win(3),Win(4))];
     pts = [newpts; pts];
+    
+    
 
 end
 
+%% Add Noise if applicable
+if ~isempty(NoiseType)
+    if strcmp(NoiseType,'Uniform')
+        NoiseFraction = NoiseSpecs*InhDist;
+        pts = pts+NoiseFraction*rand(length(pts),2);
+    end
+end
+pts = CropPts2Win(pts,Win);
 %% Apply Intensity Map if defined
 if ~isempty(IntensityMap)
     pts = ThinByIntensity(IntensityMap,Win,pts);
