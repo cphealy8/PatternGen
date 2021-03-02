@@ -14,7 +14,7 @@ isPP = zeros(1,length(filenames));
 
 if ~isempty(varargin)
     for n = 1:length(filenames)
-        if contains(filenames(n).name,'PP')
+        if contains(filenames(n).name,varargin{1})
             isPP(n) = 1;
         end
     end

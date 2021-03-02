@@ -2,10 +2,18 @@ clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
 
-filenames = getFileNames(DataDir,'PP');
+patternType = 'PAB';
+filenames = getFileNames(DataDir,patternType);
 nfiles = length(filenames);
 
-yabsmax = 0.2;
+% Set ylimits
+if strcmp(patternType,'PP')
+    yabsmax = 0.2;
+elseif strcmp(patternType,'PAB')
+    yabsmax = 0.12;
+end
+
+
 
 for n=1:nfiles
     filename = filenames{n};
@@ -45,12 +53,15 @@ end
 clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
-filenames = getFileNames(DataDir,'PP');
+patternType = 'PAB';
+filenames = getFileNames(DataDir,patternType);
 
+
+% FOR UNIVARIATE PLOTS
 % fileIDs = 1:3; % Poisson Processes
 % fileIDs = [4:8]; % PoissonClusters
 % fileIDs = [4 9 10 20]; % Poisson Clusters Other
-fileIDs = [11:14]; % Metner Regularity
+% fileIDs = [11:14]; % Metner Regularity
 % fileIDs = [16:19]; % Mixed
 
 

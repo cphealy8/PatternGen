@@ -13,7 +13,8 @@ quadratBins = 4;
 ncnt = 0; % counter
 TotTime = 0; % Total time
 
-ptfnames = getFileNames('Patterns','PP');
+patterntype = 'PAB'; 
+ptfnames = getFileNames('Patterns',patterntype);
 
 nPP = length(ptfnames);
 
@@ -22,7 +23,7 @@ tsim = zeros(1,totalSims);
 
 %% simulations
 f = waitbar(0,'Simulating...');
-for n = 20
+for n = 1:length(ptfnames)
 win = [0 1 0 1];
 npts = 100;
 
@@ -31,16 +32,29 @@ for m = 1:msims
     ncnt = ncnt+1;
     tic
 
+
+    
+
+    ptsB = [];
     % Generate Point process
     run(ptfilename);
-    numpts(m) = length(pts);
-
-    % Compute Ripley's K
-    [~,~,L] = Kest(pts,win,'t',r);
-    LmR(m,:) = L-r;
+    
+    % Defaults
+    numpts(m) = length(pts); % no. of pts
+    numptsB = NaN;
+    
+    % RUN SIMULATIONS
+    if strcmp(patterntype,'PP') % Univariate Ripley's K
+        [~,~,L] = Kest(pts,win,'t',r);
+        LmR(m,:) = L-r;
+    elseif strcmp(patterntype,'PAB') % Bivariate Ripley's K
+        numptsB(m) = length(ptsB);
+        [~,~,L] = Kmulti(pts,ptsB,win,'t',r);
+        LmR(m,:) = L-r;
+    end
     
     % Compute ChiSquare Homogeneity Test
-    [ChiSqPVal(m),ChiSq(m),ChiSqDF(m)] = ChiSq_HomogeneityTest(pts,win,quadratBins);
+%     [ChiSqPVal(m),ChiSq(m),ChiSqDF(m)] = ChiSq_HomogeneityTest(pts,win,quadratBins);
     
     
     % Timing and progress bar updates
@@ -52,12 +66,13 @@ for m = 1:msims
     waitbar(percComplete,f,sprintf('Pattern: %d/%d Simulation: %d/%d\nETR:%d min',n,nPP,m,msims,round(TimeRem/60)));
 end
 %pooled stats
-ChiSqPool = sum(ChiSq);
-ChiSqDFPool = sum(ChiSqDF);
-ChiSqPValPool = 1-chi2cdf(ChiSqPool,ChiSqDFPool);
+% ChiSqPool = sum(ChiSq);
+% ChiSqDFPool = sum(ChiSqDF);
+% ChiSqDFPool = (quadratBins*msims-1);
+% ChiSqPValPool = 1-chi2cdf(ChiSqPool,ChiSqDFPool);
 
 % Save the data;
 savename = fullfile(DataDir,strcat(ptfilename(1:end-2),'.mat'));
-save(savename,'r','LmR','msims','quadratBins','pts','numpts','ChiSqPVal','ChiSq','ChiSqDF','win','ChiSqPool','ChiSqDFPool','ChiSqPValPool')
+save(savename,'r','LmR','msims','quadratBins','pts','ptsB','numpts','numptsB','win')
 end
 close(f)
