@@ -13,6 +13,7 @@ stoptime = 5000;
 [t, A, B] = initial_conditions(width);
 
 % Simulations
+nframes=0;
 while t<stoptime
     anew = A + (da*my_laplacian(A) - A.*B.^2 + f*(1-A))*dt;
     bnew = B + (db*my_laplacian(B) + A.*B.^2 - (k+f)*B)*dt;

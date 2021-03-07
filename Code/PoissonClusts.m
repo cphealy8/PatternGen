@@ -26,16 +26,16 @@ function [Pts,ParentPts,ChildPts] = PoissonClusts(Win,ParentNum,ChildNumOpns,ROp
 %   ... pn] generates poisson clusters with a number of children (specified
 %   by the vector [n1 n2 ... nn] at user defined probabilities [p1 p2 ...
 %   pn]. 
-%
-%   PoissonClust(Win,ParentNum,ChildNumOpns,[rmin rmax],'RProbs','uniform')
+%, 
+%   PoissonClusts(Win,ParentNum,ChildNumOpns,[rmin rmax],'RProbs','uniform')
 %   generates poisson clusters with children spaced away from their parents
 %   according to a uniform distribution defined between rmin and rmax.
 %
-%   PoissonClust(Win,ParentNum,ChildNumOpns,[mu],'RProbs','exponential'
+%   PoissonClusts(Win,ParentNum,ChildNumOpns,[mu],'RProbs','exponential'
 %   generates poisson clusters with children spaced away from their parents
 %   according to a exponential distribution with mean mu. 
 %
-%   PoissonClust(Win,ParentNum,ChildNumOpns,ROpns,'AngProbs','uniform','AngOpns',[angmin
+%   PoissonClusts(Win,ParentNum,ChildNumOpns,ROpns,'AngProbs','uniform','AngOpns',[angmin
 %   angmax] generates poisson clusters with children angled from their
 %   parents according to a uniform distribution defined between angmin and
 %   angmax. Units are in radians.
@@ -44,7 +44,7 @@ function [Pts,ParentPts,ChildPts] = PoissonClusts(Win,ParentNum,ChildNumOpns,ROp
 %   be used to define child to parent angles by passing a vector of angs in
 %   AngOpns and a probability for each distance for 'AngProbs'.
 %
-%   PoissonClust(Win,ParentNum,ChildNumOpns,ROpns,'IntensityMap',IMap)
+%   PoissonClusts(Win,ParentNum,ChildNumOpns,ROpns,'IntensityMap',IMap)
 %   generates an inhomogenous poisson cluster process where the intensity
 %   of point process is defined by the input matrix IMAP. Imap should be a
 %   vector that defines the intensity of the point process at a given
@@ -123,7 +123,7 @@ if ischar(ChildNumProbs)
 
             % Generate Numbers
             NumChildren = randi([ChildNumMin ChildNumMax],[ParentNum 1]);
-        end
+        end 
     elseif strcmp(ChildNumProbs,'normal')
         ChildNumMean = abs(ChildNumOpns(1));
         ChildNumSD = abs(ChildNumOpns(2));

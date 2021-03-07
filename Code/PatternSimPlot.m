@@ -53,27 +53,58 @@ end
 clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
-patternType = 'PAB';
-filenames = getFileNames(DataDir,patternType);
+
+
 
 
 % FOR UNIVARIATE PLOTS
+% patternType = 'PP';
 % fileIDs = 1:3; % Poisson Processes
-% fileIDs = [4:8]; % PoissonClusters
-% fileIDs = [4 9 10 20]; % Poisson Clusters Other
-% fileIDs = [11:14]; % Metner Regularity
-% fileIDs = [16:19]; % Mixed
+% fileIDs = [2 4:8]; % PoissonClusters
+% fileIDs = [2 4 9 10 20]; % Poisson Clusters Other
+% fileIDs = [2 11:14]; % Metner Regularity
+% fileIDs = [2 16:19]; % Mixed
 
 % FOR BIVARIATE PLOTS
+patternType = 'PAB';
 % fileIDs = [1:2]; % Independent
 % fileIDs = [3:6]; % Positive Association
-fileIDs = [7:10]; % Negative Association
+% fileIDs = [1 3 5]; % Positive Association 5050
+% fileIDs = [2 4 6]; % Positive Association 2080
+% fileIDs = [7:10]; % Negative Association
+% fileIDs = [1 7 9]; % Negative Association 5050
+fileIDs = [2 8 10]; % Negative Association 2080
+
+filenames = getFileNames(DataDir,patternType);
 
 
 colors = {'#000000','#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
+% colors = {'#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
 
 FH2 = figure('Units','centimeters','Position',[5 5 4.5 4.5]);
-for n=1:length(fileIDs)
+
+% Plot CSR intervals (this is always based upon the first index listed
+% under fileIDs)
+    filename = filenames{fileIDs(1)};
+    filedir = fullfile(DataDir,filename);
+    load(filedir)
+    
+    meanCSR = mean(LmR);
+    sdCSR = std(LmR);
+    maxCSR = max(LmR);
+    minCSR = min(LmR);
+    meanPlusCSR = meanCSR+sdCSR;
+    meanMinusCSR = meanCSR-sdCSR;
+    r2 = [r, fliplr(r)];
+    inBetween = [minCSR, fliplr(maxCSR)];
+    fill(r2, inBetween, 'k','LineStyle','none','FaceAlpha',0.2);
+    yline(0,'-k')
+    
+    hold on
+
+    
+
+for n=2:length(fileIDs)
     filename = filenames{fileIDs(n)};
     filedir = fullfile(DataDir,filename);
     load(filedir)
@@ -86,7 +117,7 @@ for n=1:length(fileIDs)
     
     % plot
     
-    lwd = 1;
+    lwd = 1.5;
     lcolor = hex2rgb(colors{n});
     
     plot(r,meanLmR,'Color',lcolor,'LineWidth',lwd)
@@ -101,14 +132,13 @@ for n=1:length(fileIDs)
 %     title(filename(1:end-4),'Interpreter','none')
     
 
-        absmax(n)= max(abs([meanLmR]));
+        absmax(n)= max(abs([meanLmR minCSR maxCSR]));
 
     % print
 %     ResultName = fullfile(ResultDir,filename(1:end-4));
 
 end
-ylim([-1 1]*max(absmax)*1.05)
-yline(0,'--k');
+ylim([-1 1]*max(absmax)*1.05);
 % legend(filenames(fileIDs)')
 [file,path] = uiputfile(fullfile(ResultDir,'*.pdf'));
 saveas(FH2,fullfile(path,file(1:end-4)),'pdf')
