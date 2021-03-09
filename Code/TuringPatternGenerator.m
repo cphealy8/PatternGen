@@ -6,11 +6,13 @@ da = 1;
 db = .5;
 % Size of grid
 width = 128;
+height = 64;
+
 % 5,000 simulation seconds with 4 steps per simulated second
 dt = .25;
 stoptime = 5000;
 
-[t, A, B] = initial_conditions(width);
+[t, A, B] = initial_conditions(width,height);
 
 % Simulations
 nframes=0;
@@ -38,14 +40,14 @@ function out = my_laplacian(in)
   
 end
 
-function [t, A, B] = initial_conditions(n)
+function [t, A, B] = initial_conditions(width,height)
   t = 0;
   % Initialize A to one
-  A = ones(n);
+  A = ones(width,height);
   % Initialize B to zero which a clump of ones
-  B = zeros(n);
-  B(ceil((n/128)*[51:60]) ,ceil((n/128)*[51:70])) = 1;
-  B(ceil((n/128)*[61:80]),ceil((n/128)*[71:80])) = 1;
+  B = zeros(width,height);
+  B(ceil((width/128)*[51:60]) ,ceil((height/128)*[51:70])) = 1;
+  B(ceil((width/128)*[61:80]),ceil((height/128)*[71:80])) = 1;
 end
 %https://blogs.mathworks.com/graphics/2015/03/16/how-the-tiger-got-its-stripes/
 
