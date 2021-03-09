@@ -3,8 +3,7 @@
 clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
-
-
+fSize = 11;
 
 
 % FOR UNIVARIATE PLOTS
@@ -21,7 +20,7 @@ filenames = getFileNames(DataDir,patternType);
 
 
 
-FH2 = figure('Units','centimeters','Position',[5 5 4.5 4.5]);
+FH2 = figure('Units','centimeters','Position',[5 5 8 8]);
 
 % Plot CSR intervals
     filename = filenames{fileIDs(1)};
@@ -44,7 +43,7 @@ for n=1:length(fileIDs)
     inBetween = [minCSR, fliplr(maxCSR)];
 
 
-    lwd = 1;
+    lwd = 2;
     lcolor = colors{n};
     
 
@@ -55,10 +54,11 @@ for n=1:length(fileIDs)
 %     plot(r,meanPlus,'Color',lcolor,'LineWidth',lwd*.5)
 %     plot(r,meanMinus,'Color',lcolor,'LineWidth',lwd*.5);
     
-    xlabel('Scale (r, a.u.)')
-    ylabel('L(r)-r')
+    xlabel('Scale (r, a.u.)','FontSize',fSize)
+    ylabel('L(r)-r','FontSize',fSize)
     xlim([0 r(end)])
     axis square
+    set(gca,'FontSize',fSize-1)
 %     title(filename(1:end-4),'Interpreter','none')
     
 

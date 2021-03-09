@@ -102,10 +102,22 @@ end
 
 %% Add Noise if applicable
 if ~isempty(NoiseType)
+    sizeSpec = [length(pts),1];
+    ntheta = rangeRand(sizeSpec,0,2*pi);
     if strcmp(NoiseType,'Uniform')
-        NoiseFraction = NoiseSpecs*InhDist;
-        pts = pts+NoiseFraction*rand(length(pts),2);
+        nr = rangeRand(sizeSpec,NoiseSpecs(1),NoiseSpecs(2));
+
+    elseif strcmp(NoiseType,'Normal')
+        nr = abs(normrnd(NoiseSpecs(1),NoiseSpecs(2),[length(pts),1]));
+    elseif strcmp(NoiseType,'Exponential')
+        nr = exprnd(NoiseSpecs(1),sizeSpec);
+    else
+        warning('Invalid noise type. No noise added');
+        return
     end
+    
+    noise = nr.*[cos(ntheta) sin(ntheta)];
+    pts = pts+noise;
 end
 pts = CropPts2Win(pts,Win);
 

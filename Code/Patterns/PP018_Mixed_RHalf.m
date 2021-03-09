@@ -5,7 +5,7 @@ ClustCenters = InhibitionPP(win,PkgDens,InhDist);
 numClusts = length(ClustCenters);
 
 ptsperclust = round(npts/numClusts);
-childmean = ptsperclust-1;
+childmean = ptsperclust;
 childsd = ptsperclust/10;
 
 clusterRadius = 0.05;

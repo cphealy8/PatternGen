@@ -14,7 +14,6 @@ elseif strcmp(patternType,'PAB')
 end
 
 
-
 for n=1:nfiles
     filename = filenames{n};
     filedir = fullfile(DataDir,filenames{n});
@@ -53,7 +52,7 @@ end
 clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
-
+FSize = 11;
 
 
 
@@ -62,8 +61,9 @@ ResultDir = '..\Results\RK';
 % fileIDs = 1:3; % Poisson Processes
 % fileIDs = [2 4:8]; % PoissonClusters
 % fileIDs = [2 4 9 10 20]; % Poisson Clusters Other
-% fileIDs = [2 11:14]; % Metner Regularity
+% fileIDs = [2 11:14]; % Matern Regularity
 % fileIDs = [2 16:19]; % Mixed
+% fileIDs = [2 11 21:24]; % Matern Regularity with Noise
 
 % FOR BIVARIATE PLOTS
 patternType = 'PAB';
@@ -71,17 +71,19 @@ patternType = 'PAB';
 % fileIDs = [3:6]; % Positive Association
 % fileIDs = [1 3 5]; % Positive Association 5050
 % fileIDs = [2 4 6]; % Positive Association 2080
+fileIDs = [1 3 5 7 9]; % % 5050
+% fileIDs = [2 4 6 8 10]; % 2080
 % fileIDs = [7:10]; % Negative Association
 % fileIDs = [1 7 9]; % Negative Association 5050
-fileIDs = [2 8 10]; % Negative Association 2080
+% fileIDs = [2 8 10]; % Negative Association 2080
 
 filenames = getFileNames(DataDir,patternType);
 
 
-colors = {'#000000','#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
-% colors = {'#d7191c','#2b83ba','#fdae61','#abdda4','#ffffbf'};
+colors = {'#000000','#d7191c','#2b83ba','#fdae61','#abdda4','#ffff91'};
+% colors = {'#d7191c','#2b83ba','#fdae61','#abdda4','#ffff91'};
 
-FH2 = figure('Units','centimeters','Position',[5 5 4.5 4.5]);
+FH2 = figure('Units','centimeters','Position',[5 5 8 8]);
 
 % Plot CSR intervals (this is always based upon the first index listed
 % under fileIDs)
@@ -125,8 +127,8 @@ for n=2:length(fileIDs)
 %     plot(r,meanPlus,'Color',lcolor,'LineWidth',lwd*.5)
 %     plot(r,meanMinus,'Color',lcolor,'LineWidth',lwd*.5);
     
-    xlabel('Scale (r, a.u.)')
-    ylabel('L(r)-r')
+    xlabel('Scale (r, a.u.)','FontSize',FSize)
+    ylabel('L(r)-r','FontSize',FSize)
     xlim([0 r(end)])
     axis square
 %     title(filename(1:end-4),'Interpreter','none')
@@ -138,6 +140,7 @@ for n=2:length(fileIDs)
 %     ResultName = fullfile(ResultDir,filename(1:end-4));
 
 end
+set(gca,'FontSize',FSize-1);
 ylim([-1 1]*max(absmax)*1.05);
 % legend(filenames(fileIDs)')
 [file,path] = uiputfile(fullfile(ResultDir,'*.pdf'));

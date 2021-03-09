@@ -11,9 +11,8 @@ sigKern = CircKern(clustRad*imRes);
 sig = pts2signal(pts,win,imRes,sigKern);
 sig(sig>0)= 1;
 
-ptsBase =PoissonPP(win,npts*2);
+nptsB = npts-nptsA;
+ThinRatio = GetThinningRatio(1-sig);
+ptsBase =PoissonPP(win,ceil(nptsB/ThinRatio));
 ptsB = ThinByIntensity(1-sig,win,ptsBase);
-
-ptsB((npts-nptsA+1):end,:) = [];
-
 
