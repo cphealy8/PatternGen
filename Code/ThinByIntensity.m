@@ -37,9 +37,16 @@ ptpixID = pts2pix(ptsM,[xpix ypix]);
 
 % Check and convert intensity map
 IntensityMap = double(IntensityMap);
+
+% Normalize between 0 and 1
+IntMin = min(IntensityMap(:));
+if IntMin<0
+    IntensityMap = IntensityMap-IntMin;
+end
+
 IntMax = max(IntensityMap(:));
 
-if IntMax>1
+if IntMax~=1
   IntensityMap = IntensityMap./IntMax;
 end
 

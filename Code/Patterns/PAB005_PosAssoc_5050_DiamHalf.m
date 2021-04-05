@@ -1,4 +1,4 @@
-% A Points
+tt% A Points
 nptsA = round(npts*0.5);
 InhDist = 0.08;
 PkgDens = 0.3;

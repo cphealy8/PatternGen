@@ -1,4 +1,8 @@
 function [B,A] = TuringPattern(varargin)
+% This code is based upon the description here.
+% https://blogs.mathworks.com/graphics/2015/03/16/how-the-tiger-got-its-stripes/
+
+
 p = inputParser;
 
 addOptional(p,'dims',[128 128],@isnumeric)
@@ -58,7 +62,7 @@ end
 
 
 %% Display
-signal = B;
+% signal = B;
 % imagesc(B);
 end
 

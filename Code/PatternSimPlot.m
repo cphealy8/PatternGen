@@ -2,7 +2,7 @@ clc;clear;close all;
 DataDir = '..\Data\Patterns';
 ResultDir = '..\Results\RK';
 
-patternType = 'PAB';
+patternType = 'PP';
 filenames = getFileNames(DataDir,patternType);
 nfiles = length(filenames);
 
@@ -11,6 +11,8 @@ if strcmp(patternType,'PP')
     yabsmax = 0.2;
 elseif strcmp(patternType,'PAB')
     yabsmax = 0.12;
+elseif strcmp(patternType,'SP')
+    yabsmax = 0.1;
 end
 
 
@@ -57,25 +59,37 @@ FSize = 11;
 
 
 % FOR UNIVARIATE PLOTS
-% patternType = 'PP';
+patternType = 'PP';
 % fileIDs = 1:3; % Poisson Processes
 % fileIDs = [2 4:8]; % PoissonClusters
-% fileIDs = [2 4 9 10 20]; % Poisson Clusters Other
-% fileIDs = [2 11:14]; % Matern Regularity
+fileIDs = [2 8 9 10]; % Poisson Clusters Other
+% fileIDs = [2 11:15]; % Matern Regularity
 % fileIDs = [2 16:19]; % Mixed
 % fileIDs = [2 11 21:24]; % Matern Regularity with Noise
+% fileIDs = [25 25]; % Nonstationary
 
 % FOR BIVARIATE PLOTS
-patternType = 'PAB';
+% patternType = 'PAB';
 % fileIDs = [1:2]; % Independent
 % fileIDs = [3:6]; % Positive Association
 % fileIDs = [1 3 5]; % Positive Association 5050
 % fileIDs = [2 4 6]; % Positive Association 2080
-fileIDs = [1 3 5 7 9]; % % 5050
+% fileIDs = [1 3 5 7 9]; % % 5050
 % fileIDs = [2 4 6 8 10]; % 2080
 % fileIDs = [7:10]; % Negative Association
 % fileIDs = [1 7 9]; % Negative Association 5050
 % fileIDs = [2 8 10]; % Negative Association 2080
+% fileIDs = [2 11]; % Nonstationary
+
+% FOR Signal Pattern Plost
+% patternType = 'SP';
+% fileIDs = 1:3; % Function
+% fileIDs = [4 5 6 16 17]; % Gaussian Kernel
+% fileIDs = [7 8 9]; % Uniform Kernel
+% fileIDs = [10 11 12 18 19]; % Turing
+% fileIDs = [13 14 15]; % Image
+% fileIDs = [1 20 21];
+
 
 filenames = getFileNames(DataDir,patternType);
 
@@ -90,6 +104,10 @@ FH2 = figure('Units','centimeters','Position',[5 5 8 8]);
     filename = filenames{fileIDs(1)};
     filedir = fullfile(DataDir,filename);
     load(filedir)
+    
+    if contains(filename,'Nonstationary')
+        LmR = LmRRand;
+    end
     
     meanCSR = mean(LmR);
     sdCSR = std(LmR);

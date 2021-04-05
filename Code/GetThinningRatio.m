@@ -14,7 +14,7 @@ if minIMap<0
 end
 
 maxIMap = max(IMap);
-if maxIMap> 1
+if maxIMap~=1
     warning('IMap should be a matrix of likelihoods ranging between 0 and 1. Maximum of IMap exceeded 1 so automatic normalization was applied')
     IMap = IMap./maxIMap;
 end
